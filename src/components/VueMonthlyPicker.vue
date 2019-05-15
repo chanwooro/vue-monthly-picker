@@ -17,9 +17,16 @@
       <div class="date-popover" :class="menuClass" :style="menuStyle" tabindex="-1">
         <div class="picker" style="text-align: center">
           <div class="flexbox">
-            <span class="prev" @click="prevYear" :class="{deactive: !canBack}"></span>
+            <span class="prev" @click="prevYear" :class="{deactive: !canBack}">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 17 17"><g></g><path d="M5.207 8.471l7.146 7.147-0.707 0.707-7.853-7.854 7.854-7.853 0.707 0.707-7.147 7.146z"></path></svg>
+            </span>
             <div>{{year}}</div>
-            <span class="next" @click="nextYear" :class="{deactive: !canNext}"></span>
+            <span class="next" @click="nextYear" :class="{deactive: !canNext}">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 17 17">
+                <g></g>
+                <path d="M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z"></path>
+              </svg>
+            </span>
           </div>
           <div class="flexbox monthItem">
             <template v-for="(month, idx) in monthLabels">
@@ -275,6 +282,8 @@ $lightgray: #d4d4d4;
       .item {
         flex: 1;
         flex-basis: 25%;
+        font-size: 12px;
+        font-weight: bold;
       }
     }
   }
@@ -284,8 +293,8 @@ $lightgray: #d4d4d4;
   }
 
   .date-popover {
-    overflow-x: hidden;
-    overflow-y: hidden;
+    // overflow-x: hidden;
+    // overflow-y: hidden;
     outline: none;
     max-width: 350px;
     width: 100%;
@@ -325,24 +334,35 @@ $lightgray: #d4d4d4;
       cursor: pointer;
     }
   }
-
-  .next,
-  .prev {
-    width: 16%;
-    float: left;
-    text-indent: -10000px;
-    position: relative;
-
-    &:after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      -webkit-transform: translateX(-50%) translateY(-50%);
-      transform: translateX(-50%) translateY(-50%);
-      border: 6px solid transparent;
-    }
+  .next{
+    width: 16px;
+    height: 16px;
+    margin-right:1rem;
+    padding: 18px 0;
   }
+  .prev{
+    width: 16px;
+    height: 16px;
+    margin-left:1rem;
+    padding: 18px 0;
+  }
+  // .next,
+  // .prev {
+  //   width: 16%;
+  //   float: left;
+  //   text-indent: -10000px;
+  //   position: relative;
+
+  //   &:after {
+  //     content: "";
+  //     position: absolute;
+  //     left: 50%;
+  //     top: 50%;
+  //     -webkit-transform: translateX(-50%) translateY(-50%);
+  //     transform: translateX(-50%) translateY(-50%);
+  //     border: 6px solid transparent;
+  //   }
+  // }
   .next {
     &:after {
       border-left: 10px solid #000;
@@ -434,5 +454,60 @@ $lightgray: #d4d4d4;
       vertical-align: middle;
     }
   }
+}
+.vue-monthly-picker .date-popover.visible{
+  -webkit-animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  overflow-y: initial
+}
+
+@-webkit-keyframes fpFadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+            transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fpFadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+            transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+}
+.date-popover.visible::before{
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  border: solid transparent;
+  content: '';
+  left: 22px;
+  border-width: 6px;
+  margin: 0 -6px;
+  border-bottom-color: #e6e6e6;
+  bottom:100%;
+
+}
+.date-popover.visible::after{
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  border: solid transparent;
+  content: '';
+  left: 22px;
+  border-width: 5px;
+  margin: 0 -5px;
+  border-bottom-color: #fff;
+  bottom:100%;
 }
 </style>
